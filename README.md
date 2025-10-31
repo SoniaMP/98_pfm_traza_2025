@@ -5,6 +5,15 @@
 El objetivo del proyecto es **garantizar la trazabilidad de materiales reciclables** desde su origen (el ciudadano que los deposita) hasta su procesamiento y recompensa final por parte de una **autoridad reguladora**.  
 Cada material se representa como un **token único** en la blockchain que pasa por varias etapas controladas por roles con permisos específicos.
 
+El proyecto implementa un flujo multirol (ciudadano → transportista → procesador → autoridad) en el que cada acción queda registrada on-chain, asegurando transparencia y responsabilidad en toda la cadena.
+
+## 🧠 Conceptos clave
+
+- Cada **token** representa un lote o unidad de material reciclado.
+- Los **roles** controlan quién puede realizar cada acción.
+- Cada cambio de estado o propietario emite un **evento inmutable**.
+- La autoridad puede recompensar los tokens procesados.
+
 El flujo general es:
 
 1. **Ciudadano** crea un token del material reciclado (ej. plástico, vidrio).
@@ -13,6 +22,43 @@ El flujo general es:
 4. **Autoridad reguladora** revisa y recompensa el token, cerrando el ciclo de trazabilidad.
 
 Cada transición emite eventos (`CustodyChanged`, `TransferStatusChanged`) que reflejan el cambio de estado y de propietario en la cadena.
+
+---
+
+## 🧩 Roles y permisos
+
+| Rol | Permisos principales |
+|-----|-----------------------|
+| **Admin** | Aprueba o rechaza cuentas. |
+| **Citizen** | Crea nuevos tokens de materiales reciclables. |
+| **Transporter** | Recoge materiales y los envía al procesador. |
+| **Processor** | Acepta materiales, los procesa y los envía a la autoridad. |
+| **Reward Authority** | Revisa, valida y recompensa los materiales procesados. |
+
+---
+
+## 🏗️ Arquitectura
+
+```plaintext
+┌────────────────────┐
+│ AccessManager.sol  │
+│  (roles & permisos)│
+└──────────┬─────────┘
+           │
+           ▼
+┌───────────────────────────┐
+│ RecyclingTraceability.sol │
+│   (gestión del flujo)     │
+└──────────┬────────────────┘
+           │
+           ▼
+┌───────────────────────────────┐
+│ Frontend (React + MUI + Ethers) │
+│   · Gestión de roles           │
+│   · Creación y envío de tokens │
+│   · Procesamiento y recompensa │
+└───────────────────────────────┘
+```
 
 ---
 
@@ -81,11 +127,27 @@ Registra toda la trazabilidad de los tokens de reciclaje y su movimiento entre e
 
 ---
 
+### 🚀 Flujo completo
+
+| Etapa | Actor                   | Acción                | Resultado                            |
+| ----- | ----------------------- | --------------------- | ------------------------------------ |
+| 1️⃣   | Citizen                 | `createToken()`       | Crea el token inicial.               |
+| 2️⃣   | Transporter             | `collectToken()`      | Recoge el material.                  |
+| 3️⃣   | Transporter → Processor | `transfer()`          | Crea transferencia pendiente.        |
+| 4️⃣   | Processor               | `setTransferStatus()` | Acepta y obtiene custodia.           |
+| 5️⃣   | Processor               | `processToken()`      | Procesa y actualiza características. |
+| 6️⃣   | Processor → Authority   | `transfer()`          | Envío al regulador.                  |
+| 7️⃣   | Authority               | `setTransferStatus()` | Acepta el envío.                     |
+| 8️⃣   | Authority               | `rewardToken()`       | Finaliza el ciclo con recompensa.    |
+
+
+--- 
+
 ## 🧰 Instalación y configuración
 
 ### 1️⃣ Clonar el repositorio
 ```bash
-git clone https://github.com/tuusuario/recycling-traceability.git
+git clone https://github.com/SoniaMP/98_pfm_traza_2025.git
 cd supply-chain-tracker
 ```
 
@@ -198,7 +260,7 @@ cast call <ACCESS_MANAGER_ADDRESS> "getAccountInfo(address)" <USER_ADDRESS>
 
 ---
 
-## 🖥️ Frontend (opcional)
+## 🖥️ DApp Frontend
 
 Lanzar la interfaz de React:
 ```bash
@@ -207,12 +269,12 @@ npm start
 ```
 
 Incluye componentes:
-- `RegisterOrganization` (roles)
-- `Admin.jsx` (panel gestión de usuarios por un administrador)
-- `Citizen.jsx` (menú del ciudadano -- Para crear tokens y ver el resumen de recompensas)
-- `Transporter.jsx` (gestión de envíos)
-- `Processor.jsx` (procesado y envío a autoridad)
-- `RewardAuthority.jsx` (recompensa final)
+- `RegisterOrganization.tsx` (roles)
+- `Admin.tsx` (panel gestión de usuarios por un administrador)
+- `Citizen.tsx` (menú del ciudadano -- Para crear tokens y ver el resumen de recompensas)
+- `Transporter.tsx` (gestión de envíos)
+- `Processor.tsx` (procesado y envío a autoridad)
+- `RewardAuthority.tsx` (recompensa final)
 
 ---
 

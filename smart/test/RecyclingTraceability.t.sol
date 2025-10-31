@@ -185,7 +185,11 @@ contract RecyclingTraceabilityTest is Test {
         vm.stopPrank();
 
         vm.startPrank(rewardAuthority);
-        trace.rewardToken(1, 1200);
+        trace.rewardToken(
+            1,
+            1200,
+            '{"peso_neto":"1170","pureza":"96%","recompensa":"10 puntos"}'
+        );
         vm.stopPrank();
 
         (, , address holder, , , , , , , uint8 stage) = trace.getToken(1);
@@ -201,7 +205,11 @@ contract RecyclingTraceabilityTest is Test {
 
         vm.startPrank(rewardAuthority);
         vm.expectRevert("Not processed yet");
-        trace.rewardToken(1, 300);
+        trace.rewardToken(
+            1,
+            300,
+            '{"peso_neto":"1170","pureza":"96%","recompensa":"10 puntos"}'
+        );
         vm.stopPrank();
     }
 

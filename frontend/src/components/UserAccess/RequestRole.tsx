@@ -26,7 +26,7 @@ const RequestRole = () => {
       setIsLoading(true);
       await requestRole?.(role!);
       await reloadUserInfo?.();
-      navigate("/dashboard");
+      navigate("/app/dashboard");
     } catch (err) {
       alert(`Error al solicitar el rol: ${err}`);
     } finally {

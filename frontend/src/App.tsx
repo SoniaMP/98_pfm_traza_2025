@@ -5,14 +5,17 @@ import Login from "@components/UserAccess/Login";
 import DashboardRouter from "@components/Dashboard";
 import RouteLayout from "./layout/RouteLayout";
 import AdminPanel from "@components/Admin";
+import Home from "@components/Home";
 
 const App = () => {
   return (
     <>
       <Routes>
+        <Route path="/" element={<Home />} />
+
         <Route path="/login" element={<Login />} />
 
-        <Route path="/" element={<RouteLayout />}>
+        <Route path="/app" element={<RouteLayout />}>
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="request-role" element={<RequestRole />} />
           <Route path="dashboard" element={<DashboardRouter />} />

@@ -11,11 +11,11 @@ const RoleButtons = () => {
   const navigate = useNavigate();
 
   function handleNavigateToAdminPanel() {
-    navigate("/admin-panel");
+    navigate("/app/admin-panel");
   }
 
   function handleNavigateDashboard() {
-    navigate("/dashboard");
+    navigate("/app/dashboard");
   }
 
   if (userInfo?.role !== UserRole.ADMIN) {

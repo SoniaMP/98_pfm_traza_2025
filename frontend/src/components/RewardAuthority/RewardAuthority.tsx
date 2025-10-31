@@ -180,16 +180,10 @@ const RewardAuthority = () => {
                     <TableHead>
                       <TableRow>
                         <TableCell>
-                          <strong>ID</strong>
-                        </TableCell>
-                        <TableCell>
                           <strong>Token</strong>
                         </TableCell>
                         <TableCell>
                           <strong>Origen</strong>
-                        </TableCell>
-                        <TableCell>
-                          <strong>Destino</strong>
                         </TableCell>
                         <TableCell align="center">
                           <strong>Cantidad</strong>
@@ -205,13 +199,9 @@ const RewardAuthority = () => {
                     <TableBody>
                       {pendingTransfers.map((transfer) => (
                         <TableRow key={transfer.id}>
-                          <TableCell>#{transfer.id}</TableCell>
                           <TableCell>Token #{transfer.tokenId}</TableCell>
                           <TableCell>
                             <AddressInfo address={transfer.from} />
-                          </TableCell>
-                          <TableCell>
-                            <AddressInfo address={transfer.to} />
                           </TableCell>
                           <TableCell align="center">
                             {transfer.amount}
@@ -332,9 +322,7 @@ const RewardAuthority = () => {
                               "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
                           }}
                         >
-                          {t.rewardFeatures
-                            ? JSON.stringify(t.rewardFeatures, null, 2)
-                            : "N/A"}
+                          {t.rewardFeatures ? t.rewardFeatures : "N/A"}
                         </pre>
                       </TableCell>
                     </TableRow>

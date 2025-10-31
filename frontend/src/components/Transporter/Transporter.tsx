@@ -239,7 +239,7 @@ const Transporter = () => {
           <CardHeader
             title={
               <CardHeaderTitle
-                title="Historial de tokens recogidos"
+                title="Historial de tokens"
                 helperText="Lista de tokens que han sido recogidos por el transportista"
               />
             }

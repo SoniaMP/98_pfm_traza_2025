@@ -11,15 +11,15 @@ const RouteLayout = () => {
   const { userInfo, isServiceReady, isUserInfoLoading } = useGlobal();
 
   if (!account) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/app/login" replace />;
   }
 
   if (!isServiceReady || isUserInfoLoading) {
     return <LoadingOverlay loading={true} />;
   }
 
-  if (!userInfo && location.pathname !== "/request-role") {
-    return <Navigate to="/request-role" replace />;
+  if (!userInfo && location.pathname !== "/app/request-role") {
+    return <Navigate to="/app/request-role" replace />;
   }
 
   if (
@@ -27,7 +27,7 @@ const RouteLayout = () => {
     userInfo?.role !== UserRole.ADMIN
   ) {
     console.warn("🔒 Usuario no autorizado. Redirigiendo a /dashboard");
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/app/dashboard" replace />;
   }
 
   return (
